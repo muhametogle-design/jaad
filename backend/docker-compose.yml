@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jaad
+      POSTGRES_PASSWORD: jaad
+      POSTGRES_DB: jaad
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jaad -d jaad"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      DATABASE_URL: postgres://jaad:jaad@db:5432/jaad
+      TELECOM_WEBHOOK_SECRET: change-me-64-random-chars
+      DEVICE_API_KEYS: pos-key-hga-01:POS-HGA-01
+      SMS_PROVIDER: disabled
+      RUN_MIGRATIONS: "true"
+      # Override with real credentials for staging/production:
+      # EVC_MERCHANT_ID: "..."
+      # EVC_API_KEY: "..."
+      # EVC_SECRET: "..."
+      # ZAAD_MERCHANT_CODE: "..."
+      # ZAAD_SECRET: "..."
+      # AT_API_KEY: "..."
+      # AT_USERNAME: "..."
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
