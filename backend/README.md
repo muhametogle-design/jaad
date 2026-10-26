@@ -42,9 +42,9 @@ Useful scripts:
 
 ```bash
 npm run typecheck   # strict tsc
-npm test            # 27 tests (vitest + supertest + in-memory pg)
+npm test            # 42 tests (vitest + supertest + in-memory pg)
 npm run smoke       # end-to-end over real HTTP: sync → STK → webhook → SMS → P&L
-npm run build && npm start
+npm run build && npm start   # production start (node dist/server.js)
 ```
 
 ## Data model (PostgreSQL, `src/db/migrations/001_init.sql`)
@@ -80,12 +80,16 @@ Idempotency keys: `sales (device_id, order_code)`, `payments (device_id, local_i
 
 ## Tests
 
-`npm test` runs 27 tests against a real in-memory PostgreSQL (pg-mem, applying the real
+`npm test` runs 42 tests against a real in-memory PostgreSQL (pg-mem, applying the real
 `001_init.sql` migration) through the same pg-protocol adapter the app uses:
 
-- `hmac` — signature verify (timing-safe, fail-closed, header aliases)
-- `migrate` — runner applies/records versions, idempotent
-- `webhook` — 401s, PAID + `gateway_ref`, SMS template, duplicate dedupe (no double SMS), FAILED callbacks
-- `stk` — auth/validation, EVC+/Zaad dispatch, phone normalization, status lifecycle
-- `sync` — atomic batch apply, inventory & debt recompute, idempotent resubmit, multi-device merge
-- `pnl` — revenue/COGS/net, collections, credit/repaid, stock value, per-day, order audit, validation
+- `tests/hmac` — signature verify (timing-safe, fail-closed, header aliases)
+- `tests/migrate` — runner applies/records versions, idempotent
+- `tests/webhook` — 401s, PAID + `gateway_ref`, SMS template, duplicate dedupe (no double SMS), FAILED callbacks
+- `tests/stk` — auth/validation, EVC+/Zaad dispatch, phone normalization, status lifecycle
+- `tests/sync` — atomic batch apply, inventory & debt recompute, idempotent resubmit, multi-device merge
+- `tests/pnl` — revenue/COGS/net, collections, credit/repaid, stock value, per-day, order audit, validation
+- `src/tests/backend.test.js` — self-contained JS suite covering the four headline
+  guarantees in one file: HMAC 401s, webhook dedupe (no double SMS), atomic outbox
+  sync with ON CONFLICT handling + all-or-nothing invalid batches, and P&L accuracy
+  (total revenue / total COGS / net profit / stock / credit)

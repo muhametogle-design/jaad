@@ -377,9 +377,12 @@ the mobile data model (`devices`, `khat_types`, `batches`,
 `wastage`, `credit_ledger`, `payments_stk`, `webhook_events` +
 `schema_migrations`) with idempotency keys on every device-scoped table.
 
-**Verification**: `backend` runs 27 tests on an in-memory PostgreSQL
-applying the *real* migration, plus a real-HTTP end-to-end smoke
-(`npm run smoke`): sync → STK push → signed webhook → SMS → P&L.
+**Verification**: `backend` runs 42 tests on an in-memory PostgreSQL
+applying the *real* migration (incl. the self-contained
+`backend/src/tests/backend.test.js` suite: HMAC 401s, webhook dedupe,
+atomic ON CONFLICT outbox sync, P&L accuracy), plus a real-HTTP
+end-to-end smoke (`npm run smoke`): sync → STK push → signed webhook →
+SMS → P&L.
 `tsc --noEmit` strict; Dockerfile is multi-stage `node:20-alpine`
 (non-root) and `docker-compose.yml` wires `api → db (healthy)`.
 
