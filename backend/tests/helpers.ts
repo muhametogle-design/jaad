@@ -41,7 +41,7 @@ export function createTestContext(): TestContext {
   // that rejects standard DDL (e.g. DEFAULT CURRENT_TIMESTAMP). Real Postgres
   // — the production target — handles all of it.
   const db = newDb({ autoCreateForeignKeyTables: false, noAstCoverageCheck: true });
-  const sql = readFileSync(path.join(here, '../src/db/migrations/001_init.sql'), 'utf8');
+  const sql = readFileSync(path.join(here, '../src/db/001_init.sql'), 'utf8');
   db.public.none(sql);
   db.public.none(`CREATE TABLE IF NOT EXISTS schema_migrations (
     version INTEGER PRIMARY KEY,

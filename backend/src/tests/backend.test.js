@@ -28,7 +28,7 @@ import { setPoolForTest } from '../db/pool';
 import { setSmsSenderForTest } from '../services/smsService';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const MIGRATION_SQL = readFileSync(path.join(here, '../db/migrations/001_init.sql'), 'utf8');
+const MIGRATION_SQL = readFileSync(path.join(here, '../db/001_init.sql'), 'utf8');
 
 // Test env (also pinned in vitest.config.ts)
 const WEBHOOK_SECRET = 'test-webhook-secret';

@@ -47,7 +47,7 @@ npm run smoke       # end-to-end over real HTTP: sync → STK → webhook → SM
 npm run build && npm start   # production start (node dist/server.js)
 ```
 
-## Data model (PostgreSQL, `src/db/migrations/001_init.sql`)
+## Data model (PostgreSQL, `src/db/001_init.sql`)
 
 | Table | Role |
 |---|---|

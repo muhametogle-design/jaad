@@ -5,7 +5,8 @@ import { getPool } from './pool.js';
 import { logger } from '../logger.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const migrationsDir = path.join(here, 'migrations');
+// Migration files live alongside the runner: src/db/0NN_name.sql
+const migrationsDir = here;
 
 /**
  * Forward-only, additive migrations. Each file 0NN_name.sql is applied once,

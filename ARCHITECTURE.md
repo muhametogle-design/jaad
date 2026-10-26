@@ -85,13 +85,16 @@ jaad/
 │       └── AddTypeSheet.tsx    # Dynamic “+ Add New Type” (FAB target)
 ├── src/__tests__/              # cogs / money / time / ids unit tests
 └── backend/                    # ★ Cloud API + PostgreSQL sync DB (see §12)
+    ├── index.js                # JS entry point (boots server.ts)
     ├── src/
     │   ├── routes/             # payments (webhook, stk-push), sync (outbox),
     │   │                       # reporting (pnl, order audit)
     │   ├── services/           # webhook, stk, sms, sync, pnl logic
     │   ├── gateways/           # evcPlus / zaad signed STK clients, sms bulk
-    │   ├── db/                 # pg pool, migrations (001_init.sql)
+    │   ├── db/                 # pool.ts + index.js, migrate.ts,
+    │   │                       # 001_init.sql migration
     │   ├── middleware/         # device-key auth, zod/error handling
+    │   ├── tests/backend.test.js # self-contained pg-mem suite (15 tests)
     │   └── utils/              # hmac (timing-safe), money, http errors
     ├── tests/                  # 27 tests on in-memory pg (real DDL + SQL)
     └── scripts/smoke.ts        # end-to-end over real HTTP (npm run smoke)
@@ -371,7 +374,7 @@ pool, pino logging, zod validation, Docker + compose.
    stock kg/value, per-day) and `GET /api/reporting/orders/:code`
    (order + FIFO slices + STK attempts).
 
-**Schema** (13 tables, `backend/src/db/migrations/001_init.sql`) mirrors
+**Schema** (13 tables, `backend/src/db/001_init.sql`) mirrors
 the mobile data model (`devices`, `khat_types`, `batches`,
 `batch_inventory`, `customers`, `sales`, `sales_alloc`, `payments`,
 `wastage`, `credit_ledger`, `payments_stk`, `webhook_events` +
