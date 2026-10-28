@@ -1,0 +1,41 @@
+{
+  "name": "jaad-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloud backend & webhook listener for the Jaad Khat OS offline-first mobile POS (PostgreSQL)",
+  "main": "dist/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json && node scripts/copy-assets.js",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "migrate": "tsx src/db/migrate.ts",
+    "smoke": "TELECOM_WEBHOOK_SECRET=smoke-secret DEVICE_API_KEYS=smoke-key:POS-TEST-01 SMS_PROVIDER=disabled PORT=8931 RUN_MIGRATIONS=false tsx scripts/smoke.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "pg": "^8.13.1",
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "@types/supertest": "^6.0.2",
+    "pg-mem": "^3.0.3",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "~5.8.3",
+    "vitest": "^2.1.8"
+  },
+  "type": "module"
+}

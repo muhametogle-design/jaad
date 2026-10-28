@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Jaad Khat OS",
+    "slug": "jaad",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "scheme": "jaadkhat",
+    "backgroundColor": "#09090b",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.jaad.khat"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jaad.khat",
+      "supportsTablet": true
+    }
+  }
+}

@@ -1,28 +1,58 @@
 {
-  "dependencies": {
-    "cors": "^2.8.6",
-    "crypto-js": "^4.2.0",
-    "dotenv": "^18.0.9",
-    "express": "^5.3.0",
-    "nativewind": "^4.2.7",
-    "pg": "^8.23.1",
-    "react-native-reanimated": "^4.7.1",
-    "react-native-safe-area-context": "^5.10.1",
-    "tailwindcss": "^3.4.19"
-  },
-  "name": "khat-distribution-system",
+  "name": "jaad-khat-os",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "main": "expo-router/entry",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:all": "NODE_OPTIONS=--experimental-sqlite jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "dependencies": {
+    "@expo/vector-icons": "^14.1.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "crypto-js": "^4.2.0",
+    "expo": "~53.0.9",
+    "expo-asset": "~11.1.5",
+    "expo-haptics": "~14.1.4",
+    "expo-linking": "~7.1.4",
+    "expo-network": "~7.1.4",
+    "expo-router": "~5.0.7",
+    "expo-splash-screen": "~0.30.8",
+    "expo-sqlite": "~15.2.1",
+    "expo-status-bar": "~2.2.3",
+    "expo-system-ui": "~5.0.7",
+    "nativewind": "^4.1.23",
+    "query-string": "^9.5.1",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0",
+    "tailwindcss": "^3.4.17"
+  },
   "devDependencies": {
-    "pg-mem": "^3.0.14",
-    "vitest": "^5.0.5"
+    "@babel/core": "^7.25.2",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jest": "^29.5.14",
+    "@types/react": "~19.0.10",
+    "@types/react-test-renderer": "~19.0.0",
+    "jest": "~29.7.0",
+    "jest-expo": "~53.0.5",
+    "typescript": "~5.8.3"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/__tests__/**/*.test.tsx"
+    ]
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
