@@ -36,6 +36,23 @@ export function createApp(): express.Express {
     }),
   );
 
+  app.get('/', (_req, res) => {
+    res.json({
+      service: 'jaad-backend',
+      status: 'OK',
+      endpoints: {
+        'GET /health': 'liveness',
+        'GET /health/ready': 'DB readiness',
+        'POST /api/payments/webhook': 'HMAC-verified telecom callback (x-waafi-signature / x-signature)',
+        'POST /api/payments/stk-push': 'device-auth: dispatch EVC+ / Zaad STK prompt',
+        'GET /api/payments/status/:orderId': 'device-auth: payment state poll',
+        'POST /api/sync/outbox': 'device-auth: offline batch sync (SQLite → PostgreSQL)',
+        'GET /api/reporting/pnl?from=YYYY-MM-DD&to=YYYY-MM-DD': 'device-auth: P&L aggregation',
+        'GET /api/reporting/orders/:orderCode': 'device-auth: order audit (FIFO + STK)',
+      },
+      auth: 'device routes require x-device-key + x-device-id (see DEVICE_API_KEYS)',
+    });
+  });
   app.get('/health', (_req, res) => {
     res.json({ status: 'OK', uptime: Math.round(process.uptime()) });
   });
